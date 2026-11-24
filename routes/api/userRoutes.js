@@ -4,7 +4,7 @@ import { signToken } from '../../utils/auth.js';
 
 const router = e.Router();
 
-router.post('/user/register', async (req, res) => {
+router.post('/users/register', async (req, res) => {
   try {
     const user = await User.create(req.body);
 
@@ -21,7 +21,7 @@ router.post('/user/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
  
