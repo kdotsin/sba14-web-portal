@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import "./config/passport.js"
 import e from "express";
 import connectDB from "./config/connection.js";
 import router from './routes/index.js';

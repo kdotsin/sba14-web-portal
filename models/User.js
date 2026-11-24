@@ -14,21 +14,23 @@ const userSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must use a valid email address'],
   },
-  password: {
-    type: String,
-    minlength: 6,
-    // Not required: OAuth users will log in via GitHub without a local password
-  },
   githubId: {
     type: String,
     unique: true,
-    sparse: true, // Allows multiple users to have null/undefined githubId without triggering unique index errors
+    // sparse: true, // Allows multiple users to have null/undefined githubId without triggering unique index errors
+  },
+  password: {
+    type: String,
+    minlength: 6,
+    required: function() {
+      return !this.githubId
+    }
   },
 });
  
 // hash user password
 userSchema.pre('save', async function () {
-  if (this.isNew || this.isModified('password')) {
+  if (this.password && this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }

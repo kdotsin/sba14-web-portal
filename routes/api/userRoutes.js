@@ -1,6 +1,7 @@
 import e from 'express';
 import User from '../../models/User.js';
 import { signToken } from '../../utils/auth.js';
+import passport from 'passport';
 
 const router = e.Router();
 
@@ -47,5 +48,21 @@ router.post('/users/login', async (req, res) => {
     res.status(500).json({ error: 'cannot log in', details: err.message})
   }
 });
+
+router.get(
+  '/users/auth/github',
+  passport.authenticate('github', { scope: ['user:email'] })
+);
+
+router.get(
+  '/users/auth/github/callback',
+  passport.authenticate('github', {
+    failureRedirect: '/login',
+    session: false 
+  }),
+  (req, res) => {
+    res.json(req.user)
+  }
+)
  
 export default router;
