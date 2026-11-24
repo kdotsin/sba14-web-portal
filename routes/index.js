@@ -3,6 +3,6 @@ import apiRoutes from './api/index.js';
 
 const router = e.Router();
 
-router.use('/', apiRoutes);
+router.use('/api', apiRoutes);
 
 export default router

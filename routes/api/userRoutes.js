@@ -5,7 +5,7 @@ import passport from 'passport';
 
 const router = e.Router();
 
-router.post('/users/register', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const user = await User.create(req.body);
 
@@ -22,7 +22,7 @@ router.post('/users/register', async (req, res) => {
   }
 });
 
-router.post('/users/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
  
@@ -50,12 +50,12 @@ router.post('/users/login', async (req, res) => {
 });
 
 router.get(
-  '/users/auth/github',
+  '/auth/github',
   passport.authenticate('github', { scope: ['user:email'] })
 );
 
 router.get(
-  '/users/auth/github/callback',
+  '/auth/github/callback',
   passport.authenticate('github', {
     failureRedirect: '/login',
     session: false 
